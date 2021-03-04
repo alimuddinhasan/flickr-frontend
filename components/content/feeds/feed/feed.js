@@ -1,20 +1,30 @@
 import { Card } from 'react-bootstrap'
+import { DateTime } from 'luxon'
 
-const feed = () => {
+const feed = ({ image, title, publishedAt, author }) => {
+  const formatDate = date => {
+    var now = DateTime.now();
+    var published = DateTime.fromISO(date);
+    const { days, hours, minutes, seconds } = now.diff(published, ['days', 'hours', 'minutes', 'seconds']) 
+
+    if (seconds < 60 && minutes <= 0 && hours <= 0 && days <= 0) {
+      return 'Few seconds ago'
+    } else if (minutes < 60 && hours <= 0 && days <= 0) {
+      return `${minutes} minutes ago`
+    } else if (hours < 24 && days <= 0) {
+      return `${hours} hours ago`
+    } else {
+      return published.toFormat('DD MMM YYYY')
+    }
+  }
+
   return (
     <Card>
-      <Card.Img variant="top" src="https://dummyimage.com/640x4:3/" />
+      <Card.Img variant="top" src={image} />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-        <blockquote className="blockquote mb-0">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-            erat a ante.
-          </p>
-        </blockquote> */}
+        <Card.Title>{title}</Card.Title>
         <div className="blockquote-footer">
-          04 March 2021 by <a href="#">Author</a>
+          {formatDate(publishedAt)} by <a href={author.link} target="_blank">{author.name}</a>
         </div>
       </Card.Body>
     </Card>

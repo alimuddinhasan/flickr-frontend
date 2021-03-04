@@ -8,6 +8,7 @@ import Feeds from 'components/content/feeds/feeds'
 
 export default function Home() {
   const [search, setSearch] = useState('')
+  const [images, setImages] = useState([])
 
   useEffect(() => {
     fetchImages()
@@ -20,15 +21,24 @@ export default function Home() {
       params.tagmode = 'any'
     }
     try {
-      const images = await axios.get('/images', {
+      const getImages = await axios.get('/images', {
         params
       })
 
-      console.log('RESULT', images)
+      const { data } = getImages
+
+      const newImages = [
+        ...JSON.parse(JSON.stringify(images)),
+        ...data.items
+      ]
+      
+      setImages(newImages)
     } catch (err) {
       console.log('SOMETHING WRONG', err)
     }
   }
+
+  console.log('IMAGES', images)
   return (
     
     <div>
@@ -39,7 +49,7 @@ export default function Home() {
 
       <main>
         <Header />
-        <Feeds />
+        <Feeds images={images} />
       </main>
 
       <footer>
