@@ -5,9 +5,11 @@ import utils from 'styles/utils.module.scss'
 
 const feeds = () => {
   return (
-    <div className={utils.container}>
-      <Feed />
-    </div>
+    <section>
+      <div className={utils.container}>
+        <Feed />
+      </div>
+    </section>
   )
 }
 

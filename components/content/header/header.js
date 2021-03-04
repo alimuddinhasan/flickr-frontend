@@ -2,10 +2,9 @@ import styles from './header.module.scss'
 import utils from 'styles/utils.module.scss'
 
 const header = () => {
-  const classArray = [styles.header]
   return (
-    <section className={classArray.join(' ')} >
-      <div className={utils.container}>
+    <section className={styles.header} >
+      <div className={[utils.container, styles.container].join(' ')}>
         <div className={styles.title}>
           <h3>Flickrgram</h3>
         </div>
