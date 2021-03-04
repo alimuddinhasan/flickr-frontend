@@ -69,7 +69,7 @@ export default function Home() {
 
       <main>
         <Header onSearch={text => searchHandler(text)} />
-        <Feeds images={images} />
+        <Feeds images={images} loading={loading} />
       </main>
 
       <footer>

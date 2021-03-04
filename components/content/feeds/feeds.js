@@ -1,9 +1,11 @@
+import { Spinner } from 'react-bootstrap'
+
 import Feed from './feed/feed'
 
 import styles from './feeds.module.scss'
 import utils from 'styles/utils.module.scss'
 
-const feeds = ({ images }) => {
+const feeds = ({ images, loading }) => {
   const feed = images.map((image, index) => {
     const author = {
       name: 'Author',
@@ -15,6 +17,9 @@ const feeds = ({ images }) => {
     <section className={styles.feeds}>
       <div className={[utils.container, styles.container].join(' ')}>
         {feed}
+        { loading && <Spinner animation="border" /> }
+        <div className="action">
+        </div>
       </div>
     </section>
   )
