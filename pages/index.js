@@ -9,12 +9,20 @@ import Feeds from 'components/content/feeds/feeds'
 export default function Home() {
   const [search, setSearch] = useState('')
   const [images, setImages] = useState([])
+  const [isFirstLoading, setIsFirstLoading] = useState(true)
 
   useEffect(() => {
-    fetchImages()
-  }, [])
+    if (!images.length || isFirstLoading) {
+      fetchImages(search)
+    }
+  }, [images])
 
-  const fetchImages = async () => {
+  const searchHandler = (text) => {
+    setSearch(text)
+    setImages([])
+  }
+
+  const fetchImages = async (search) => {
     let params = {}
     if (search) {
       params.tags = search
@@ -26,13 +34,8 @@ export default function Home() {
       })
 
       const { data } = getImages
-
-      const newImages = [
-        ...JSON.parse(JSON.stringify(images)),
-        ...data.items
-      ]
-      
-      setImages(newImages)
+      setIsFirstLoading(false)
+      setImages(prevImages => [...prevImages, ...data.items])
     } catch (err) {
       console.log('SOMETHING WRONG', err)
     }
@@ -48,7 +51,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <Header />
+        <Header onSearch={text => searchHandler(text)} />
         <Feeds images={images} />
       </main>
 

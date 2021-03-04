@@ -1,9 +1,12 @@
-import { Form } from 'react-bootstrap'
+import { useState } from 'react'
+import { Form, Button } from 'react-bootstrap'
 
 import styles from './header.module.scss'
 import utils from 'styles/utils.module.scss'
 
-const header = () => {
+const header = ({ onSearch }) => {
+  const [search, setSearch] = useState('')
+
   return (
     <section className={styles.header} >
       <div className={[utils.container, styles.container].join(' ')}>
@@ -12,8 +15,15 @@ const header = () => {
           <p>by Alimuddin Hasan</p>
         </div>
         <div className={styles.search}>
-          {/* <input placeholder="Search tags..." /> */}
-          <Form.Control size="sm" type="text" placeholder="Search tags..." />
+          <Form.Control 
+            size="sm" 
+            type="text" 
+            placeholder="Search tags..." 
+            value={search} 
+            onChange={(event) => setSearch(event.target.value)} />
+          <Button size="sm" onClick={() => onSearch(search)}>
+            Search
+          </Button>
         </div>
       </div>
     </section>
