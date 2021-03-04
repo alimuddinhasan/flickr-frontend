@@ -60,8 +60,6 @@ export default function Home() {
     }
   }
 
-  console.log('IMAGES', images)
-
   return (
     <Aux>
       <Head>
