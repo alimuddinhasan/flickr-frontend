@@ -5,8 +5,9 @@ import utils from 'styles/utils.module.scss'
 
 const feeds = () => {
   return (
-    <section>
-      <div className={utils.container}>
+    <section className={styles.feeds}>
+      <div className={[utils.container, styles.container].join(' ')}>
+        <Feed />
         <Feed />
       </div>
     </section>
