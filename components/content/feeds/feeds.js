@@ -8,9 +8,10 @@ import utils from 'styles/utils.module.scss'
 const feeds = ({ images, loading }) => {
   const feed = images.map((image, index) => {
     const author = {
-      name: 'Author',
+      name: image.author.split('"')[1],
       link: `https://www.flickr.com/people/${image.author_id}`
     }
+    console.log('MAP NAME', image.author.split('"'))
     return <Feed key={index} image={image.media.m} title={image.title} publishedAt={image.published} author={author} />
   })
   return (
