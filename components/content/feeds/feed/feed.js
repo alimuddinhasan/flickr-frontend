@@ -14,7 +14,7 @@ const feed = ({ image, title, publishedAt, author }) => {
     } else if (hours < 24 && days <= 0) {
       return `${hours} hours ago`
     } else {
-      return published.toFormat('DD MMM YYYY')
+      return published.toFormat('dd MMM y')
     }
   }
 

@@ -10,7 +10,7 @@ import Feeds from 'components/content/feeds/feeds'
 export default function Home() {
   const [search, setSearch] = useState('')
   const [images, setImages] = useState([])
-  const [isFirstLoading, setIsFirstLoading] = useState(true)
+  const [lastFeedModified, setLastFeedModified] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -50,9 +50,11 @@ export default function Home() {
       })
 
       const { data } = getImages
-      // setIsFirstLoading(false)
       setLoading(false)
-      setImages(prevImages => [...prevImages, ...data.items])
+      if (lastFeedModified !== data.modified) {
+        setLastFeedModified(data.modified)
+        setImages(prevImages => [...prevImages, ...data.items])
+      }
     } catch (err) {
       console.log('SOMETHING WRONG', err)
     }
