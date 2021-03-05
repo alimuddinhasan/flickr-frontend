@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import { Modal, Button } from 'react-bootstrap'
 
 import axios from 'plugins/axios'
 
@@ -12,6 +13,7 @@ export default function Home() {
   const [images, setImages] = useState([])
   const [lastFeedModified, setLastFeedModified] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if (loading) {
@@ -27,7 +29,6 @@ export default function Home() {
   const scrollHandler = (event) => {
     // If scroll reach bottom of the page
     if (!loading && window.pageYOffset >= window.document.body.clientHeight - window.document.body.clientHeight / 4) {
-      console.log('WAKTUNYA LOAD BARU')
       setLoading(true)
     }
   }
@@ -56,6 +57,7 @@ export default function Home() {
         setImages(prevImages => [...prevImages, ...data.items])
       }
     } catch (err) {
+      setError(true)
       console.log('SOMETHING WRONG', err)
     }
   }
@@ -72,8 +74,23 @@ export default function Home() {
         <Feeds images={images} loading={loading} />
       </main>
 
-      <footer>
-      </footer>
+      <Modal
+        show={error}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Something went wrong. Please try again later!
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setError(null)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Aux>
   )
 }
